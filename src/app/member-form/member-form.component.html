@@ -1,0 +1,113 @@
+<div class="form-container">
+  <h2>{{ isEditMode ? 'Edit Member' : 'Create New Member' }}</h2>
+
+  <form [formGroup]="form" (ngSubmit)="sub()">
+    
+    <!-- Member Type Selection (only for new members) -->
+    <div *ngIf="!isEditMode" class="type-selector">
+      <label>Type de Membre</label>
+      <select [(ngModel)]="memberType" [ngModelOptions]="{standalone: true}" class="form-control">
+        <option value="etudiant">Étudiant</option>
+        <option value="enseignant">Enseignant Chercheur</option>
+      </select>
+    </div>
+
+    <!-- CIN Field -->
+    <mat-form-field appearance="outline">
+      <mat-label>CIN</mat-label>
+      <input matInput formControlName="cin" placeholder="Enter CIN">
+      <mat-error *ngIf="form.get('cin')?.hasError('required')">CIN is required</mat-error>
+      <mat-error *ngIf="form.get('cin')?.hasError('minlength')">CIN must be at least 6 characters</mat-error>
+    </mat-form-field>
+
+    <!-- Nom Field -->
+    <mat-form-field appearance="outline">
+      <mat-label>Nom</mat-label>
+      <input matInput formControlName="nom" placeholder="Enter last name">
+      <mat-error *ngIf="form.get('nom')?.hasError('required')">Nom is required</mat-error>
+    </mat-form-field>
+
+    <!-- Prenom Field -->
+    <mat-form-field appearance="outline">
+      <mat-label>Prénom</mat-label>
+      <input matInput formControlName="prenom" placeholder="Enter first name">
+      <mat-error *ngIf="form.get('prenom')?.hasError('required')">Prénom is required</mat-error>
+    </mat-form-field>
+
+    <!-- Date de Naissance Field -->
+    <mat-form-field appearance="outline">
+      <mat-label>Date de Naissance</mat-label>
+      <input matInput [matDatepicker]="pickerNaissance" formControlName="dateNaissance">
+      <mat-datepicker-toggle matSuffix [for]="pickerNaissance"></mat-datepicker-toggle>
+      <mat-datepicker #pickerNaissance></mat-datepicker>
+      <mat-error *ngIf="form.get('dateNaissance')?.hasError('required')">Date de Naissance is required</mat-error>
+    </mat-form-field>
+
+    <!-- Email Field -->
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" placeholder="example@email.com">
+      <mat-error *ngIf="form.get('email')?.hasError('required')">Email is required</mat-error>
+      <mat-error *ngIf="form.get('email')?.hasError('email')">Please enter a valid email</mat-error>
+    </mat-form-field>
+
+    <!-- CV Field - File Upload -->
+    <div class="cv-upload">
+      <label>CV</label>
+      <input type="file" (change)="onFileSelected($event)" accept=".pdf,.doc,.docx" #fileInput>
+      <div class="file-info" *ngIf="selectedFileName">
+        <mat-icon>description</mat-icon>
+        <span>{{ selectedFileName }}</span>
+        <button type="button" mat-icon-button (click)="removeFile()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- Etudiant-specific fields -->
+    <div *ngIf="memberType === 'etudiant'">
+      <mat-form-field appearance="outline">
+        <mat-label>Diplôme</mat-label>
+        <input matInput formControlName="diplome" placeholder="Ex: Licence, Mastère, Ingénieur">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Sujet</mat-label>
+        <input matInput formControlName="sujet" placeholder="Sujet de recherche">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Date d'Inscription</mat-label>
+        <input matInput [matDatepicker]="pickerInscription" formControlName="dateInscription">
+        <mat-datepicker-toggle matSuffix [for]="pickerInscription"></mat-datepicker-toggle>
+        <mat-datepicker #pickerInscription></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <!-- Enseignant-specific fields -->
+    <div *ngIf="memberType === 'enseignant'">
+      <mat-form-field appearance="outline">
+        <mat-label>Grade</mat-label>
+        <input matInput formControlName="grade" placeholder="Ex: Maître Assistant, Professeur">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Établissement</mat-label>
+        <input matInput formControlName="etablissement" placeholder="Ex: ENIS, FST">
+      </mat-form-field>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit">
+        <mat-icon>save</mat-icon>
+        {{ isEditMode ? 'Update' : 'Create' }}
+      </button>
+      
+      <button mat-raised-button type="button" (click)="cancel()">
+        <mat-icon>cancel</mat-icon>
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

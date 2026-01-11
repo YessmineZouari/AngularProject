@@ -1,0 +1,104 @@
+<button routerLink="/create">Create New</button>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!-- Id Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let m"> {{ m.id }} </td>
+    </ng-container>
+
+    <!-- CIN Column -->
+    <ng-container matColumnDef="cin">
+      <th mat-header-cell *matHeaderCellDef> CIN </th>
+      <td mat-cell *matCellDef="let m"> {{ m.cin }} </td>
+    </ng-container>
+
+    <!-- Nom Column -->
+    <ng-container matColumnDef="nom">
+      <th mat-header-cell *matHeaderCellDef> Nom </th>
+      <td mat-cell *matCellDef="let m"> {{ m.nom }} </td>
+    </ng-container>
+
+    <!-- Prenom Column -->
+    <ng-container matColumnDef="prenom">
+      <th mat-header-cell *matHeaderCellDef> Prénom </th>
+      <td mat-cell *matCellDef="let m"> {{ m.prenom }} </td>
+    </ng-container>
+
+    <!-- Email Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let m"> {{ m.email }} </td>
+    </ng-container>
+
+    <!-- Type Column -->
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef> Type </th>
+      <td mat-cell *matCellDef="let m">
+        <span *ngIf="m.grade; else etudiant">Enseignant Chercheur</span>
+        <ng-template #etudiant>Etudiant</ng-template>
+      </td>
+    </ng-container>
+
+    <!-- Diplome Column (for Etudiant) -->
+    <ng-container matColumnDef="diplome">
+      <th mat-header-cell *matHeaderCellDef> Diplôme </th>
+      <td mat-cell *matCellDef="let m"> {{ m.diplome || '-' }} </td>
+    </ng-container>
+
+    <!-- Grade Column (for Enseignant) -->
+    <ng-container matColumnDef="grade">
+      <th mat-header-cell *matHeaderCellDef> Grade </th>
+      <td mat-cell *matCellDef="let m"> {{ m.grade || '-' }} </td>
+    </ng-container>
+
+    <!-- Etablissement Column (for Enseignant) -->
+    <ng-container matColumnDef="etablissement">
+      <th mat-header-cell *matHeaderCellDef> Établissement </th>
+      <td mat-cell *matCellDef="let m"> {{ m.etablissement || '-' }} </td>
+    </ng-container>
+
+    <!-- Sujet Column (for Etudiant) -->
+    <ng-container matColumnDef="sujet">
+      <th mat-header-cell *matHeaderCellDef> Sujet </th>
+      <td mat-cell *matCellDef="let m"> {{ m.sujet || '-' }} </td>
+    </ng-container>
+
+    <!-- Date Inscription Column -->
+    <ng-container matColumnDef="dateInscription">
+      <th mat-header-cell *matHeaderCellDef> Date Inscription </th>
+      <td mat-cell *matCellDef="let m">
+        {{ m.dateInscription ? (m.dateInscription | date:'dd/MM/yyyy') : '-' }}
+      </td>
+    </ng-container>
+
+    <!-- Date Naissance Column -->
+    <ng-container matColumnDef="dateNaissance">
+      <th mat-header-cell *matHeaderCellDef> Date Naissance </th>
+      <td mat-cell *matCellDef="let m">
+        {{ m.dateNaissance | date:'dd/MM/yyyy' }}
+      </td>
+    </ng-container>
+
+    <!-- CV Column -->
+    <ng-container matColumnDef="cv">
+      <th mat-header-cell *matHeaderCellDef> CV </th>
+      <td mat-cell *matCellDef="let m"> {{ m.cv || '-' }} </td>
+    </ng-container>
+
+    <!-- Actions -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let element"> 
+        <button routerLink="/{{element.id}}/edit">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button (click)="delete(element.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

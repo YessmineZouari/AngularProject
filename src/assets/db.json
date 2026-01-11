@@ -1,0 +1,107 @@
+{
+  "members": [
+    {
+      "cin": "1111112",
+      "name": "ali",
+      "type": "administrateur",
+      "createDate": null,
+      "id": "49fa"
+    },
+    {
+      "id": "c83b",
+      "cin": "10101010",
+      "name": "mohamed",
+      "type": "etudiant",
+      "createDate": "2025-10-02T08:13:58.980Z"
+    },
+    {
+      "cin": "123456",
+      "name": "alimohamed",
+      "type": "admin",
+      "createDate": "2025-10-09T08:35:18.204Z",
+      "id": "b94f"
+    },
+    {
+      "cin": "00001155",
+      "name": "mohamed",
+      "type": "ali",
+      "createDate": "2025-12-29T14:34:57.680Z",
+      "id": "0dd6"
+    }
+  ],
+  "publication": [
+    {
+      "id": "1",
+      "type": "article",
+      "titre": "Les nouvelles tendances du Cloud Computing",
+      "lien": "https://example.com/cloud-article",
+      "date": "2025-10-09T09:00:00.000Z",
+      "sourcepdf": "cloud_trends.pdf"
+    }
+  ],
+  "outil": [
+    {
+      "id": "1",
+      "date": "2025-10-09T09:30:00.000Z",
+      "source": "GitHub Repository - https://github.com/example/project"
+    }
+  ],
+  "event": [
+    {
+      "titre": "Conférence sur la sécurité",
+      "dateDebut": "2025-12-30T23:00:00.000Z",
+      "dateFin": "2026-01-01T23:00:00.000Z",
+      "lieu": "ENETCOM",
+      "id": "1"
+    },
+    {
+      "id": "50ca",
+      "titre": "kbzjdz",
+      "date": "20/10/2025",
+      "lieu": "sfax"
+    },
+    {
+      "id": "cb88",
+      "titre": "Conférence sur Cloud",
+      "date": "25/11/2025",
+      "lieu": "Sousse"
+    },
+    {
+      "titre": "lekdnks",
+      "date": "20/02/2002",
+      "lieu": "sfax",
+      "id": "907c"
+    },
+    {
+      "id": "f2ce",
+      "titre": "hdhzdv",
+      "date": null,
+      "lieu": "sousse"
+    },
+    {
+      "id": "8499",
+      "titre": "zkjdbz",
+      "date": null,
+      "lieu": "sfax"
+    },
+    {
+      "id": "a03f",
+      "titre": null,
+      "date": null,
+      "lieu": null
+    },
+    {
+      "id": "3e33",
+      "titre": "jsdns",
+      "date": null,
+      "lieu": "qdhn"
+    },
+    {
+      "id": "8809",
+      "titre": "nzd,d ",
+      "dateDebut": "2025-11-10T23:00:00.000Z",
+      "dateFin": "2025-11-12T23:00:00.000Z",
+      "lieu": "sfax"
+    }
+  ]
+}
