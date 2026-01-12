@@ -1,0 +1,19 @@
+<mat-dialog-content [formGroup]="form">
+
+    <!-- Date Field -->
+    <mat-form-field>
+        <input matInput placeholder="Date" formControlName="date">
+    </mat-form-field>
+
+    <!-- Source Field -->
+    <mat-form-field>
+        <input matInput placeholder="Source" formControlName="source">
+    </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-raised-button (click)="close()">Close</button>
+    <button mat-raised-button color="primary" (click)="save()">Save</button>
+</mat-dialog-actions>
+<p>tool-create works!</p>
