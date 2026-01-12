@@ -3,7 +3,9 @@ import { ChartDataset, ChartOptions } from 'chart.js';
 import { MemberService } from 'src/services/member.service';
 import { ArticleService } from 'src/services/article.service';
 import { EventService } from 'src/services/event.service';
+import { ToolService } from 'src/services/tool.service'; // <--- NEW
 import { Member } from 'src/models/Member';
+import { Outil } from 'src/models/Outil'; // <--- NEW
 
 @Component({
   selector: 'app-dashboard',
@@ -16,6 +18,7 @@ export class DashboardComponent implements OnInit {
   nb_Members: number = 0;
   nb_Articles: number = 0;
   nb_Events: number = 0;
+  nb_Tools: number = 0; // <--- NEW
 
   // Chart: Member Distribution (Pie Chart)
   chartData: ChartDataset[] = [
@@ -39,7 +42,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     private memberService: MemberService,
     private articleService: ArticleService,
-    private eventService: EventService
+    private eventService: EventService,
+    private toolService: ToolService // <--- NEW
   ) {}
 
   ngOnInit(): void {
@@ -63,6 +67,11 @@ export class DashboardComponent implements OnInit {
     this.eventService.getAllEvent().subscribe(events => {
       this.nb_Events = events.length;
     });
+
+    // Count Tools
+    this.toolService.getAllTool().subscribe(tools => {
+      this.nb_Tools = tools.length;
+    });
   }
 
   // Load chart data
@@ -73,12 +82,9 @@ export class DashboardComponent implements OnInit {
       let nbStudent = 0;
 
       members.forEach(member => {
-        // If has grade or etablissement -> Teacher
         if (member.grade || member.etablissement) {
           nbTeacher++;
-        } 
-        // If has diplome or sujet or dateInscription -> Student
-        else if (member.diplome || member.sujet || member.dateInscription) {
+        } else if (member.diplome || member.sujet || member.dateInscription) {
           nbStudent++;
         }
       });

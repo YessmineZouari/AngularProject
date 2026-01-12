@@ -1,68 +1,81 @@
 <div class="dashboard-container" style="padding: 20px;">
-  
-  <!-- Statistics Cards -->
-  <div style="display: flex; gap: 20px; margin-bottom: 30px; flex-wrap: wrap;">
-    
-    <mat-card style="flex: 1; min-width: 200px;">
-      <mat-card-header>
-        <mat-card-title style="font-size: 18px; color: #3f51b5;">
-          <mat-icon style="vertical-align: middle;">people</mat-icon>
-          Members
-        </mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div style="font-size: 36px; font-weight: bold; color: #3f51b5; text-align: center; padding: 20px 0;">
-          {{nb_Members}}
-        </div>
-      </mat-card-content>
-    </mat-card>
 
-    <mat-card style="flex: 1; min-width: 200px;">
-      <mat-card-header>
-        <mat-card-title style="font-size: 18px; color: #4caf50;">
-          <mat-icon style="vertical-align: middle;">article</mat-icon>
-          Articles
-        </mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div style="font-size: 36px; font-weight: bold; color: #4caf50; text-align: center; padding: 20px 0;">
-          {{nb_Articles}}
-        </div>
-      </mat-card-content>
-    </mat-card>
+    <!-- Statistics Cards -->
+    <div style="display: flex; gap: 20px; margin-bottom: 30px; flex-wrap: wrap;">
 
-    <mat-card style="flex: 1; min-width: 200px;">
-      <mat-card-header>
-        <mat-card-title style="font-size: 18px; color: #ff9800;">
-          <mat-icon style="vertical-align: middle;">event</mat-icon>
-          Events
-        </mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div style="font-size: 36px; font-weight: bold; color: #ff9800; text-align: center; padding: 20px 0;">
-          {{nb_Events}}
-        </div>
-      </mat-card-content>
-    </mat-card>
+        <mat-card style="flex: 1; min-width: 200px;">
+            <mat-card-header>
+                <mat-card-title style="font-size: 18px; color: #3f51b5;">
+                    <mat-icon style="vertical-align: middle;">people</mat-icon>
+                    Members
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div style="font-size: 36px; font-weight: bold; color: #3f51b5; text-align: center; padding: 20px 0;">
+                    {{nb_Members}}
+                </div>
+            </mat-card-content>
+        </mat-card>
 
-  </div>
+        <mat-card style="flex: 1; min-width: 200px;">
+            <mat-card-header>
+                <mat-card-title style="font-size: 18px; color: #4caf50;">
+                    <mat-icon style="vertical-align: middle;">article</mat-icon>
+                    Articles
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div style="font-size: 36px; font-weight: bold; color: #4caf50; text-align: center; padding: 20px 0;">
+                    {{nb_Articles}}
+                </div>
+            </mat-card-content>
+        </mat-card>
 
-  <!-- Chart: Member Distribution -->
-  <div style="display: flex; justify-content: center;">
-    <mat-card style="width: 100%; max-width: 600px;">
-      <mat-card-header>
-        <mat-card-title>Member Distribution (Teachers vs Students)</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="chart-wrapper" style="height: 400px; position: relative;">
-          <canvas baseChart
-            [type]="'pie'"
-            [data]="{ labels: chartLabels, datasets: chartData }"
-            [options]="chartOptions">
-          </canvas>
-        </div>
-      </mat-card-content>
-    </mat-card>
-  </div>
+        <mat-card style="flex: 1; min-width: 200px;">
+            <mat-card-header>
+                <mat-card-title style="font-size: 18px; color: #ff9800;">
+                    <mat-icon style="vertical-align: middle;">event</mat-icon>
+                    Events
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div style="font-size: 36px; font-weight: bold; color: #ff9800; text-align: center; padding: 20px 0;">
+                    {{nb_Events}}
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        <!-- NEW: Tools Card -->
+        <mat-card style="flex: 1; min-width: 200px;">
+            <mat-card-header>
+                <mat-card-title style="font-size: 18px; color: #9c27b0;">
+                    <mat-icon style="vertical-align: middle;">build</mat-icon>
+                    Tools
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div style="font-size: 36px; font-weight: bold; color: #9c27b0; text-align: center; padding: 20px 0;">
+                    {{nb_Tools}}
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+    </div>
+
+    <!-- Chart: Member Distribution -->
+    <div style="display: flex; justify-content: center;">
+        <mat-card style="width: 100%; max-width: 600px;">
+            <mat-card-header>
+                <mat-card-title>Member Distribution (Teachers vs Students)</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="chart-wrapper" style="height: 400px; position: relative;">
+                    <canvas baseChart [type]="'pie'" [data]="{ labels: chartLabels, datasets: chartData }"
+                        [options]="chartOptions">
+                    </canvas>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
 
 </div>

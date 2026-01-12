@@ -7,13 +7,13 @@ import { ToolService } from 'src/services/tool.service';
 import { ToolCreateComponent } from '../tool-create/tool-create.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
+
 @Component({
   selector: 'app-tool',
   templateUrl: './tool.component.html',
   styleUrls: ['./tool.component.css']
 })
 export class ToolComponent implements AfterViewInit {
-
   displayedColumns: string[] = ['id', 'date', 'source', 'edit'];
   dataSource: MatTableDataSource<Outil>;
 
@@ -21,43 +21,43 @@ export class ToolComponent implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private Ts: ToolService, private dialog: MatDialog) {
+    
+    // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource();
   }
-
-  open() {
+  open(){
     const dialogRef = this.dialog.open(ToolCreateComponent);
-
-    dialogRef.afterClosed().subscribe((data) => {
-      if (data) {
-        this.Ts.addTool(data).subscribe(() => {
-          this.Ts.getAllTool().subscribe((x) => {
-            this.dataSource.data = x;
-          });
-        });
-      }
-    });
+    dialogRef.afterClosed().subscribe((data)=>{
+      if(data){
+      this.Ts.addTool(data).subscribe((data)=>{
+        this.Ts.getAllTool().subscribe((x)=>{this.dataSource.data=x})
+      })
+    }
+    })
   }
+openEdit(id: string) {
+  const dialogRef = this.dialog.open(ToolCreateComponent, {
+    data: id
+  });
 
-  openEdit(id: string) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = id;
-
-    const dialogRef = this.dialog.open(ToolCreateComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe((updatedData) => {
-      if (updatedData) {
-        this.Ts.updateTool(id, updatedData).subscribe(() => {
-          console.log('Outil mis à jour avec succès');
+  dialogRef.afterClosed().subscribe(updatedData => {
+    if (updatedData) {
+      this.Ts.updateTool(id, updatedData).subscribe(() => {
+        // 🔄 refresh table after update
+        this.Ts.getAllTool().subscribe(res => {
+          this.dataSource.data = res;
         });
-      }
-    });
-  }
+      });
+    }
+  });
+}
+
+
 
   ngAfterViewInit() {
-    this.Ts.getAllTool().subscribe((res) => {
-      this.dataSource.data = res;
-    });
-
+    //remplir le tableau datasource 
+    this.Ts.getAllTool().subscribe((res)=>{
+      this.dataSource.data=res;})
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -70,4 +70,6 @@ export class ToolComponent implements AfterViewInit {
       this.dataSource.paginator.firstPage();
     }
   }
+} {
+
 }
