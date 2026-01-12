@@ -3,7 +3,7 @@ import { Member } from 'src/models/Member';
 import { MemberService } from 'src/services/member.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { ArticleMembersComponent } from '../article-members/article-members.component'; // Import your dialog
+import { ArticleMembersComponent } from '../article-members/article-members.component';
 
 @Component({
   selector: 'app-member',
@@ -38,14 +38,12 @@ export class MemberComponent implements OnInit {
     this.fetch();
   }
 
-  // Fetch all members
   fetch(): void {
     this.MS.GetAllMembers().subscribe((data) => {
       this.dataSource = data;
     });
   }
 
-  // Delete a member with confirmation
   delete(id: String): void {
     let dialogRef = this.dialog.open(ConfirmDialogComponent, {
       height: '200px',
@@ -54,14 +52,13 @@ export class MemberComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.MS.deleteMemberById(id).subscribe(() => {
+        this.MS.deleteMemberById(id as unknown as string).subscribe(() => {
           this.fetch();
         });
       }
     });
   }
 
-  // ✅ New method: Open dialog to show publications of a member
   openPublications(member: Member): void {
     this.MS.getFullMember(member.id.toString()).subscribe(fullMember => {
       console.log(fullMember.pubs);
@@ -70,11 +67,17 @@ export class MemberComponent implements OnInit {
       dialogConfig.width = '800px';
       dialogConfig.maxHeight = '80vh';
       dialogConfig.data = {
-        publications: fullMember.pubs,    // Pass the list of publications
-        memberName: `${fullMember.nom} ${fullMember.prenom}` // Optional for dialog title
+        publications: fullMember.pubs,
+        memberName: `${fullMember.nom} ${fullMember.prenom}`
       };
 
       this.dialog.open(ArticleMembersComponent, dialogConfig);
     });
+  }
+
+  // Download CV
+  downloadCV(member: Member): void {
+    const fileName = `${member.nom}_${member.prenom}_CV.pdf`;
+    this.MS.triggerCVDownload(member.id);
   }
 }

@@ -70,6 +70,18 @@ export class MemberFormComponent implements OnInit {
   onFileSelected(event: any): void {
     const file = event.target.files[0];
     if (file) {
+      // Validate file type
+      if (file.type !== 'application/pdf') {
+        alert('Seuls les fichiers PDF sont acceptés');
+        return;
+      }
+      
+      // Validate file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('Le fichier est trop volumineux (max 5MB)');
+        return;
+      }
+      
       this.selectedFile = file;
       this.selectedFileName = file.name;
       this.form.patchValue({ cv: file.name });
@@ -117,7 +129,13 @@ export class MemberFormComponent implements OnInit {
       this.MS.updateMember(this.currentId, memberData).subscribe({
         next: (response) => {
           console.log('Update successful:', response);
-          this.router.navigate(['/member']);
+          
+          // ✅ Upload CV file if selected
+          if (this.selectedFile) {
+            this.uploadCVFile(Number(this.currentId));
+          } else {
+            this.router.navigate(['/member']);
+          }
         },
         error: (error) => {
           console.error('Full error object:', error);
@@ -138,15 +156,41 @@ export class MemberFormComponent implements OnInit {
       console.log('Data being sent:', memberData);
       
       this.MS.addMember(memberData, this.memberType).subscribe({
-        next: (response) => {
+        next: (response: any) => {
           console.log('Creation successful:', response);
-          this.router.navigate(['/member']);
+          
+          // ✅ Upload CV file if selected
+          if (this.selectedFile && response.id) {
+            this.uploadCVFile(response.id);
+          } else {
+            this.router.navigate(['/member']);
+          }
         },
         error: (error) => {
           console.error('Full error object:', error);
         }
       });
     }
+  }
+
+  // ✅ New method to upload CV file
+  private uploadCVFile(memberId: number): void {
+    if (!this.selectedFile) {
+      this.router.navigate(['/member']);
+      return;
+    }
+
+    this.MS.uploadCV(memberId, this.selectedFile).subscribe({
+      next: (response) => {
+        console.log('CV uploaded successfully:', response);
+        this.router.navigate(['/member']);
+      },
+      error: (error) => {
+        console.error('Error uploading CV:', error);
+        alert('Le membre a été créé mais le CV n\'a pas pu être téléchargé');
+        this.router.navigate(['/member']);
+      }
+    });
   }
 
   cancel(): void {
