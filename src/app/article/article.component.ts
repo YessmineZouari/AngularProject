@@ -19,6 +19,7 @@ export class ArticleComponent implements AfterViewInit {
     'titre',
     'date',
     'lieu',
+    'type',
     'sourcePdf',
     'edit'
   ];
@@ -57,20 +58,21 @@ export class ArticleComponent implements AfterViewInit {
     });
   }
 
-  openEdit(id: number): void {
-    const config = new MatDialogConfig<number>();
-    config.data = id;
+openEdit(article: Article): void {
+  const dialogRef = this.dialog.open(ArticleCreateComponent, {
+    data: article
+  });
 
-    const dialogRef = this.dialog.open(ArticleCreateComponent, config);
+  dialogRef.afterClosed().subscribe(updatedData => {
+    if (updatedData) {
+      this.articleService
+        .updateArticle(article.id, updatedData)
+        .subscribe(() => this.loadArticles());
+    }
+  });
+}
 
-    dialogRef.afterClosed().subscribe((updatedData: Article | undefined) => {
-      if (updatedData) {
-        this.articleService.updateArticle(id, updatedData).subscribe(() => {
-          this.loadArticles();
-        });
-      }
-    });
-  }
+
 
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;

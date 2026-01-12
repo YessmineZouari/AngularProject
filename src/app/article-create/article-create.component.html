@@ -1,1 +1,39 @@
-<p>article-create works!</p>
+<mat-dialog-content [formGroup]="form">
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Titre</mat-label>
+    <input matInput formControlName="titre">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Date</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="date">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Lieu</mat-label>
+    <input matInput formControlName="lieu">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Source PDF</mat-label>
+    <input matInput formControlName="sourcePdf">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Type</mat-label>
+    <mat-select formControlName="type">
+      <mat-option value="article">Article</mat-option>
+      <mat-option value="journal">Journal</mat-option>
+      <mat-option value="conference">Conference</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Close</button>
+  <button mat-raised-button color="primary" (click)="save()">Save</button>
+</mat-dialog-actions>

@@ -36,6 +36,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { MatSelectModule } from '@angular/material/select';
 import { ArticleCreateComponent } from './article-create/article-create.component';
+import { NgChartsModule } from 'ng2-charts';
+
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -73,7 +76,9 @@ import { ArticleCreateComponent } from './article-create/article-create.componen
    MatSortModule,MatDatepickerModule,MatNativeDateModule,
    AngularFireModule.initializeApp(firebaseConfig),AngularFireAuthModule,
    MatProgressSpinnerModule,
-   MatSelectModule
+   MatSelectModule,
+   NgChartsModule, 
+   MatCardModule
 
   ],
   providers: [],

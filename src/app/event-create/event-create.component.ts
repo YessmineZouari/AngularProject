@@ -9,39 +9,44 @@ import { EventService } from 'src/services/event.service';
   styleUrls: ['./event-create.component.css']
 })
 export class EventCreateComponent {
+
   form!: FormGroup;
 
   constructor(
     private dialogRef: MatDialogRef<EventCreateComponent>,
     private Es: EventService,
-    @Inject(MAT_DIALOG_DATA) public data: any // injection correcte des données
-
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    if (data){
-      console.log(data)
-      this.Es.getEventByID(data).subscribe((res)=>{
-        this.form =new FormGroup({
-      titre: new FormControl(res.titre),
-      dateDebut: new FormControl(res.dateDebut),
-      dateFin: new FormControl(res.dateFin),
 
-      lieu: new FormControl(res.lieu),
-        })
-      })
-    }else{
-     // Initialiser le formulaire
-    this.form = new FormGroup({
-      titre: new FormControl( null),
-      dateDebut: new FormControl( null),
-      dateFin: new FormControl( null),
-      lieu: new FormControl(null),
-    });
+    // EDIT MODE
+    if (data) {
+      this.Es.getEventByID(data).subscribe(res => {
+        this.form = new FormGroup({
+          titre: new FormControl(res.titre),
+          date: new FormControl(res.date), // ✅ FIXED
+          lieu: new FormControl(res.lieu),
+        });
+      });
     }
-    
+    // CREATE MODE
+    else {
+      this.form = new FormGroup({
+        titre: new FormControl(null),
+        date: new FormControl(null), // ✅ SAME NAME
+        lieu: new FormControl(null),
+      });
+    }
   }
 
   save() {
-    this.dialogRef.close(this.form.value);
+    const payload = {
+      ...this.form.value,
+      date: this.form.value.date
+        ? new Date(this.form.value.date).toISOString().split('T')[0]
+        : null
+    };
+
+    this.dialogRef.close(payload);
   }
 
   close() {

@@ -36,22 +36,23 @@ export class EventComponent implements AfterViewInit {
     }
     })
   }
-  openEdit(id: string) {
-  const dialogConfig = new MatDialogConfig();
-  dialogConfig.data =  id ; 
+openEdit(id: string) {
+  const dialogRef = this.dialog.open(EventCreateComponent, {
+    data: id
+  });
 
-  const dialogRef = this.dialog.open(EventCreateComponent, dialogConfig);
-
-  dialogRef.afterClosed().subscribe((updatedData) => {
+  dialogRef.afterClosed().subscribe(updatedData => {
     if (updatedData) {
-     
       this.Es.updateEvent(id, updatedData).subscribe(() => {
-        console.log('Événement mis à jour avec succès');
-       
+        // 🔄 refresh table after update
+        this.Es.getAllEvent().subscribe(res => {
+          this.dataSource.data = res;
+        });
       });
     }
   });
 }
+
 
 
   ngAfterViewInit() {
