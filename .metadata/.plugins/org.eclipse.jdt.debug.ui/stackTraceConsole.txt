@@ -1,0 +1,7 @@
+@PutMapping("/affecter/{idE}/{idENS}")
+    public void affecterEtudiantToEnseignant(
+            @PathVariable Long idE,
+            @PathVariable Long idENS) {
+
+        etudiantService.affecterEtudiantToEnseignant(idE, idENS);
+    }

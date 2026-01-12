@@ -1,0 +1,164 @@
+package tn.enis.demo;
+
+import java.util.Date;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.aspectj.weaver.MemberImpl;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+
+import lombok.AllArgsConstructor;
+import tn.enis.demo.beans.PublicationBean;
+import tn.enis.demo.dao.EtudiantRepository;
+import tn.enis.demo.dao.MemberRepository;
+import tn.enis.demo.entities.EnseignantChercheur;
+import tn.enis.demo.entities.Etudiant;
+import tn.enis.demo.entities.Member;
+import tn.enis.demo.proxies.PublicationsProxies;
+import tn.enis.demo.service.IMemberService;
+import tn.enis.demo.service.MembreServiceImp;
+
+@SpringBootApplication
+@AllArgsConstructor
+@EnableDiscoveryClient
+@EnableFeignClients
+
+public class MemberProjectApplication implements CommandLineRunner{
+	
+	/*MemberRepository memberRepository;
+	EtudiantRepository etudiantRepository;*/
+	MembreServiceImp serviceImp;
+	PublicationsProxies proxies;
+
+	public static void main(String[] args) {
+		SpringApplication.run(MemberProjectApplication.class, args);
+	}
+	
+	
+
+	@Override
+	public void run(String... args) throws Exception {
+		Etudiant etd1=Etudiant.builder()
+				.cin("123456")
+				.dateInscription(new Date())
+				.dateNaissance(new Date())
+				.diplome("mastère")
+				.email("etd1@gmail.com")
+				.pasword("pass1")
+				.encadrant(null)
+				.cv("cv1")
+				.nom("abid")
+				.prenom("youssef")
+				.sujet("blockhain")
+				.build();
+		Etudiant etd3=Etudiant.builder()
+				.cin("123456")
+				.dateInscription(new Date())
+				.dateNaissance(new Date())
+				.diplome("mastère")
+				.email("etd3@gmail.com")
+				.pasword("pass1")
+				.encadrant(null)
+				.cv("cv1")
+				.nom("ellouze")
+				.prenom("youssef")
+				.sujet("blockhain")
+				.build();
+		Etudiant etd2=Etudiant.builder()
+				.cin("1234567")
+				.dateInscription(new Date())
+				.dateNaissance(new Date())
+				.diplome("ingénieur")
+				.email("etd2@gmail.com")
+				.pasword("pass2")
+				.encadrant(null)
+				.cv("cv2")
+				.nom("ellouze")
+				.prenom("oussema")
+				.sujet("info")
+				.build();
+		EnseignantChercheur ens1=EnseignantChercheur.builder()
+				.cin("123456")
+				.dateNaissance(new Date())
+				.email("ens1@gmail.com")
+				.pasword("pass1")
+				.grade("maitre assitant")
+				.etablissement("Enis")
+				
+				.cv("cv1")
+				.nom("nom_ens1")
+				.prenom("prennom_ens1")
+				.build();
+		EnseignantChercheur ens2=EnseignantChercheur.builder()
+				.cin("1234567")
+				.dateNaissance(new Date())
+				.email("ens2@gmail.com")
+				.pasword("pass2")
+				.grade("professeur")
+				.cv("cv2")
+				.etablissement("Enis")
+				.nom("nom_ens2")
+				.prenom("prennom_ens2")
+				.build();
+		serviceImp.addMember(etd1);
+		serviceImp.addMember(etd2);
+		serviceImp.addMember(etd3);
+		serviceImp.addMember(ens2);
+		serviceImp.addMember(ens1);
+		PublicationBean pub=proxies.getPublicationById(1);
+		System.out.println("hello");
+		System.out.println(pub.getTitre());
+		serviceImp.affecterauteurTopublication(1L, 1L);
+		serviceImp.affecterauteurTopublication(1L, 2L);
+		/*Member m= serviceImp.findMember(1L);
+		m.setCv("cv1.pdf");
+		serviceImp.updateMember(m);
+		serviceImp.deleteMember(2L);*/
+		/*serviceImp.affecterEtudiantToEnseignant(etd1.getId(), ens1.getId());
+		serviceImp.affecterEtudiantToEnseignant(etd2.getId(), ens1.getId());
+		List<Etudiant> etds = serviceImp.checherByEndrant(ens1);
+		for (Etudiant e : etds) {
+			System.out.println("id : "+e.getId());
+		    System.out.println("nom : "+e.getNom());
+		    System.out.println("prenom : "+e.getPrenom());
+		}*/
+		
+		
+		/*memberRepository.save(etd1);
+		memberRepository.save(etd2);
+		memberRepository.save(etd3);
+		memberRepository.save(ens1);
+		memberRepository.save(ens2);
+		List<Member> members = memberRepository.findAll();
+		for (Member m : members) {
+		    System.out.println("nom : "+m.getNom());
+		    System.out.println("prenom : "+m.getPrenom());
+		}
+		/*Member member=memberRepository.findById((long) 1).get();
+	    System.out.println("nom : "+member.getNom());
+	    System.out.println("prenom : "+member.getPrenom());
+	    System.out.println("modifier le prénom et le nom par de Id 1: ");
+	    member.setNom("salahe");
+	    member.setPrenom("mohamed");
+	    memberRepository.save(member);
+	    System.out.println("nom : "+member.getNom());
+	    System.out.println("prenom : "+member.getPrenom());*/
+	    
+	    
+	    /*System.out.println("delate le member d'id 4");
+	    memberRepository.deleteById((long) 4 );*/
+		/*List<Etudiant> etudiants = etudiantRepository.chercher("ellouze");
+		System.out.println("chercher where le nom égal a ellouze ");
+		for (Member e : etudiants) {
+		    System.out.println("nom : "+e.getNom());
+		    System.out.println("prenom : "+e.getPrenom());
+		}*/
+		
+	}
+
+}
