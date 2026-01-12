@@ -36,6 +36,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { MatSelectModule } from '@angular/material/select';
 import { ArticleCreateComponent } from './article-create/article-create.component';
+import { ToolCreateComponent } from './tool-create/tool-create.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { ArticleCreateComponent } from './article-create/article-create.componen
     EventComponent,
     EventCreateComponent,
     LoginComponent,
-    ArticleCreateComponent
+    ArticleCreateComponent,
+    ToolCreateComponent
     
   ],
   imports: [
