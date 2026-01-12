@@ -1,3 +1,5 @@
+import { Article } from './article';
+
 export interface Member {
   id: number;
   cin: string;
@@ -15,4 +17,5 @@ export interface Member {
   // Enseignant
   grade?: string;
   etablissement?: string;
+   pubs?: Article[];
 }

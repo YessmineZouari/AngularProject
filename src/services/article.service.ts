@@ -21,11 +21,12 @@ export class ArticleService {
   }
 
   updateArticle(id: number, article: Article) {
-  return this.http.put<Article>(`${this.apiUrl}/${id}`, article);
-}
-
+    return this.http.put<Article>(`${this.apiUrl}/${id}`, article);
+  }
 
   deleteArticle(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  
 }

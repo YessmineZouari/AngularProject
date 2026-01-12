@@ -25,12 +25,12 @@
     </ng-container>
 
     <!-- Date -->
-<ng-container matColumnDef="date">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
-  <td mat-cell *matCellDef="let row">
-    {{ row.date | date:'yyyy-MM-dd' }}
-  </td>
-</ng-container>
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.date | date:'yyyy-MM-dd' }}
+      </td>
+    </ng-container>
 
     <!-- Lieu -->
     <ng-container matColumnDef="lieu">
@@ -43,13 +43,13 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Source PDF</th>
       <td mat-cell *matCellDef="let row">{{ row.sourcePdf }}</td>
     </ng-container>
-  <!-- Type Column -->
-<ng-container matColumnDef="type">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
-  <td mat-cell *matCellDef="let row">
-    {{ row.type | titlecase }}
-  </td>
-</ng-container>
+    <!-- Type Column -->
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.type | titlecase }}
+      </td>
+    </ng-container>
 
     <!-- Edit -->
     <ng-container matColumnDef="edit">

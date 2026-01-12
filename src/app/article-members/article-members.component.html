@@ -1,0 +1,47 @@
+<h2 mat-dialog-title>
+    Publications of {{ memberName }}
+</h2>
+
+<div mat-dialog-content>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <!-- ID -->
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> ID </th>
+            <td mat-cell *matCellDef="let article"> {{ article.id }} </td>
+        </ng-container>
+
+        <!-- Title -->
+        <ng-container matColumnDef="titre">
+            <th mat-header-cell *matHeaderCellDef> Title </th>
+            <td mat-cell *matCellDef="let article"> {{ article.titre }} </td>
+        </ng-container>
+
+        <!-- Date -->
+        <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef> Date </th>
+            <td mat-cell *matCellDef="let article"> {{ article.date | date:'yyyy-MM-dd' }} </td>
+        </ng-container>
+
+        <!-- Type -->
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef> Type </th>
+            <td mat-cell *matCellDef="let article"> {{ article.type }} </td>
+        </ng-container>
+
+        <!-- Source PDF -->
+        <ng-container matColumnDef="sourcePdf">
+            <th mat-header-cell *matHeaderCellDef> Source PDF </th>
+            <td mat-cell *matCellDef="let article">
+                <a [href]="article.sourcePdf" target="_blank">View PDF</a>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>
+
+<div mat-dialog-actions align="end">
+    <button mat-button color="warn" (click)="close()">Close</button>
+</div>

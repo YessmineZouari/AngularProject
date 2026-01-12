@@ -38,6 +38,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { ArticleCreateComponent } from './article-create/article-create.component';
 import { NgChartsModule } from 'ng2-charts';
 import { MatCardModule } from '@angular/material/card';
+import { ArticleMembersComponent } from './article-members/article-members.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { MatCardModule } from '@angular/material/card';
     EventComponent,
     EventCreateComponent,
     LoginComponent,
-    ArticleCreateComponent
+    ArticleCreateComponent,
+    ArticleMembersComponent,
   ],
   imports: [
     BrowserModule,

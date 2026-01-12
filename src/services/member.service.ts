@@ -47,4 +47,7 @@ export class MemberService {
     
     return this.httpClient.put<Member>(endpoint, member);
   }
+  getFullMember(id: string): Observable<Member> {
+  return this.httpClient.get<Member>(`http://localhost:8082/fullmember/${id}`);
+}
 }
