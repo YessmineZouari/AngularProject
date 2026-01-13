@@ -3,7 +3,9 @@ import { Member } from 'src/models/Member';
 import { MemberService } from 'src/services/member.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { ArticleMembersComponent } from '../article-members/article-members.component'; // Import your dialog
+import { ArticleMembersComponent } from '../article-members/article-members.component';
+import { MemberEventsComponent } from '../member-events/member-events.component';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-member',
@@ -25,56 +27,89 @@ export class MemberComponent implements OnInit {
     'sujet',
     'dateInscription',
     'dateNaissance',
-    'cv',
     'publications',
+    'events',
+    'cv',
+
     'actions'
   ];
-  
+
   dataSource: Member[] = [];
 
-  constructor(private MS: MemberService, private dialog: MatDialog) {}
+  constructor(
+    private memberService: MemberService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.fetch();
   }
 
-  // Fetch all members
   fetch(): void {
-    this.MS.GetAllMembers().subscribe((data) => {
-      this.dataSource = data;
+    this.memberService.GetAllMembers().subscribe({
+      next: (members: Member[]) => {
+        const requests = members.map(member =>
+          this.memberService.getFullMember(member.id.toString())
+        );
+
+        forkJoin(requests).subscribe({
+          next: (fullMembers: Member[]) => {
+            this.dataSource = fullMembers;
+          },
+          error: (error) => {
+            console.error('Error loading full members:', error);
+          }
+        });
+      },
+      error: (error) => {
+        console.error('Error loading members:', error);
+      }
     });
   }
 
-  // Delete a member with confirmation
-  delete(id: String): void {
-    let dialogRef = this.dialog.open(ConfirmDialogComponent, {
+  delete(id: string): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       height: '200px',
-      width: '300px',
+      width: '300px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.MS.deleteMemberById(id).subscribe(() => {
-          this.fetch();
+        this.memberService.deleteMemberById(id).subscribe({
+          next: () => this.fetch(),
+          error: (error) => console.error('Delete error:', error)
         });
       }
     });
   }
 
-  // ✅ New method: Open dialog to show publications of a member
   openPublications(member: Member): void {
-    this.MS.getFullMember(member.id.toString()).subscribe(fullMember => {
-      console.log(fullMember.pubs);
-      
-      const dialogConfig = new MatDialogConfig();
-      dialogConfig.width = '800px';
-      dialogConfig.maxHeight = '80vh';
-      dialogConfig.data = {
-        publications: fullMember.pubs,    // Pass the list of publications
-        memberName: `${fullMember.nom} ${fullMember.prenom}` // Optional for dialog title
-      };
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '800px';
+    dialogConfig.maxHeight = '80vh';
+    dialogConfig.data = {
+      publications: member.pubs,
+      memberName: `${member.nom} ${member.prenom}`
+    };
 
-      this.dialog.open(ArticleMembersComponent, dialogConfig);
-    });
+    this.dialog.open(ArticleMembersComponent, dialogConfig);
+  }
+
+  openEvents(member: Member): void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '800px';
+    dialogConfig.maxHeight = '80vh';
+    dialogConfig.data = {
+      events: member.events,
+      memberName: `${member.nom} ${member.prenom}`
+    };
+
+    this.dialog.open(MemberEventsComponent, dialogConfig);
+  }
+
+  // Download CV
+  downloadCV(member: Member): void {
+    const fileName = `${member.nom}_${member.prenom}_CV.pdf`;
+    this.memberService.triggerCVDownload(member.id, fileName);
   }
 }

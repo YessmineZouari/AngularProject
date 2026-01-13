@@ -39,6 +39,7 @@ import { ArticleCreateComponent } from './article-create/article-create.componen
 import { NgChartsModule } from 'ng2-charts';
 import { MatCardModule } from '@angular/material/card';
 import { ArticleMembersComponent } from './article-members/article-members.component';
+import { MemberEventsComponent } from './member-events/member-events.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { ArticleMembersComponent } from './article-members/article-members.compo
     LoginComponent,
     ArticleCreateComponent,
     ArticleMembersComponent,
+    MemberEventsComponent,
   ],
   imports: [
     BrowserModule,

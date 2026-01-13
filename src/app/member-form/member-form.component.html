@@ -2,7 +2,7 @@
   <h2>{{ isEditMode ? 'Edit Member' : 'Create New Member' }}</h2>
 
   <form [formGroup]="form" (ngSubmit)="sub()">
-    
+
     <!-- Member Type Selection (only for new members) -->
     <div *ngIf="!isEditMode" class="type-selector">
       <label>Type de Membre</label>
@@ -103,7 +103,7 @@
         <mat-icon>save</mat-icon>
         {{ isEditMode ? 'Update' : 'Create' }}
       </button>
-      
+
       <button mat-raised-button type="button" (click)="cancel()">
         <mat-icon>cancel</mat-icon>
         Cancel

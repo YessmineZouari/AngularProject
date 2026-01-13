@@ -33,7 +33,12 @@
         <ng-container matColumnDef="sourcePdf">
             <th mat-header-cell *matHeaderCellDef> Source PDF </th>
             <td mat-cell *matCellDef="let article">
-                <a [href]="article.sourcePdf" target="_blank">View PDF</a>
+                <a [href]="article.sourcePdf" [download]="article.titre + '.pdf'" *ngIf="article.sourcePdf">
+                    <button mat-icon-button color="primary" matTooltip="Download PDF">
+                        <mat-icon>download</mat-icon>
+                    </button>
+                </a>
+                <span *ngIf="!article.sourcePdf">-</span>
             </td>
         </ng-container>
 

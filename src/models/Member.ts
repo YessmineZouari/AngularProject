@@ -1,4 +1,6 @@
 import { Article } from './article';
+import {Evt } from './Evt';
+
 
 export interface Member {
   id: number;
@@ -18,4 +20,5 @@ export interface Member {
   grade?: string;
   etablissement?: string;
    pubs?: Article[];
+   events?: Evt[];
 }
